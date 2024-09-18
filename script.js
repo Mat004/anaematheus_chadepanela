@@ -70,3 +70,53 @@ document.getElementById('iniciar').addEventListener('click', function () {
         alert('Por favor, insira seu nome completo!');
     }
 });
+
+// Função que captura os presentes selecionados e o nome da pessoa
+async function enviarDadosParaSheets() {
+    // Captura o nome da pessoa (ajuste o ID do campo conforme necessário)
+    const nomePessoa = document.getElementById("nomeUsuario").value;
+
+    // Captura os presentes selecionados (ajuste conforme necessário)
+    const presentesSelecionados = [
+        "Descrição do presente 1",
+        "Descrição do presente 2",
+        "Descrição do presente 3"
+    ].join(", "); // Concatena os presentes em uma string separada por vírgula
+
+    const dataAtual = new Date().toLocaleDateString(); // Pega a data atual
+
+    // Cria o objeto com os dados formatados
+    const dados = {
+        "Nome": nomePessoa,
+        "Data": dataAtual,
+        "Presentes Selecionados": presentesSelecionados
+    };
+
+    const url = "https://sheetdb.io/api/v1/lilmqffgjyxmh"; // Substitua com a URL da Web App
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(dados) // Envia os dados como JSON
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.statusText}`);
+        }
+
+        const resultado = await response.json();
+        console.log("Success:", resultado);
+        alert("Lista de presentes enviada com sucesso!");
+
+    } catch (error) {
+        console.error("Erro ao enviar dados:", error);
+        alert(`Erro ao enviar lista de presentes: ${error.message}`);
+    }
+}
+
+// Exemplo de como o botão pode chamar essa função quando clicado
+document.getElementById("botaoEnviar").addEventListener("click", enviarDadosParaSheets);
