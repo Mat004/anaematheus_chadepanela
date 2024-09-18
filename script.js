@@ -37,10 +37,10 @@ document.getElementById('enviar').addEventListener('click', function () {
         return;
     }
 
-    // Formatar os dados como um array de objetos
+    // Formatar os dados corretamente (remover o espaço após "nome")
     const sheetData = [
         {
-            "nome": nome,
+            "nome": nome,  // Corrigir aqui
             "data": data,
             "presentes": presentesSelecionados.join(', ')
         }
