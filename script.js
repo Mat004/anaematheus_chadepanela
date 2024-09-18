@@ -56,17 +56,23 @@ document.getElementById('enviar').addEventListener('click', function () {
         },
         body: JSON.stringify(sheetData),  // Converter o objeto JS em JSON
     })
-    .then(response => response.json())  // Processar a resposta
+    .then(response => {
+        return response.json().then(data => {
+            if (!response.ok) {
+                // Exibir o erro completo vindo do servidor
+                console.error('Erro do servidor:', data);
+                throw new Error(data.error || 'Erro ao criar registro no Google Sheets');
+            }
+            return data;
+        });
+    })
     .then(data => {
-        if (data.created) {  // Verifica se os dados foram enviados corretamente
-            alert('Lista enviada com sucesso! Obrigado por participar do nosso Chá de Panela!');
-            console.log('Success:', data);
-        } else {
-            throw new Error('Erro ao criar registro no Google Sheets');
-        }
+        alert('Lista enviada com sucesso! Obrigado por participar do nosso Chá de Panela!');
+        console.log('Success:', data);
     })
     .catch((error) => {
-        console.error('Error:', error);
+        console.error('Error:', error.message || error);
         alert('Houve um erro ao enviar sua lista. Por favor, tente novamente.');
     });
 });
+
