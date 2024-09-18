@@ -34,7 +34,7 @@ document.getElementById('enviar').addEventListener('click', function () {
     const nome = localStorage.getItem('nome');  // Recuperar nome do localStorage
     const data = new Date().toLocaleString();
 
-    if (!nome) {
+    if (!nome || nome === "") {
         alert('Nome não encontrado. Por favor, insira seu nome novamente.');
         console.log('Erro: nome não encontrado no localStorage');
         document.getElementById('form-nome').style.display = 'block';
@@ -48,13 +48,11 @@ document.getElementById('enviar').addEventListener('click', function () {
     }
 
     // Dados a serem enviados
-    const sheetData = [
-        {
-            "nome": nome,  // Certificar que o nome está correto
-            "data": data,
-            "presentes": presentesSelecionados.join(', ')
-        }
-    ];
+    const sheetData = {
+        "data": data,
+        "nome": nome.trim(), // Garantir que o nome é enviado corretamente
+        "presentes": presentesSelecionados.join(', ')
+    };
 
     // Fazer a requisição POST para o SheetDB
     fetch('https://sheetdb.io/api/v1/lilmqffgjyxmh', {
@@ -62,7 +60,7 @@ document.getElementById('enviar').addEventListener('click', function () {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(sheetData),
+        body: JSON.stringify(sheetData),  // Enviar o objeto como JSON
     })
     .then(response => {
         if (!response.ok) {
