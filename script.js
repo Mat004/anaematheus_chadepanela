@@ -41,11 +41,13 @@ document.getElementById('enviar').addEventListener('click', function () {
         return;
     }
 
-    // Preparar os dados para envio
+    // Preparar os dados para envio no formato esperado
     const sheetData = {
-        nome: nome,
-        data: data,
-        presentes: presentesSelecionados.join(', ')  // Combina todos os presentes em uma única string
+        data: {
+            nome: nome,
+            data: data,
+            presentes: presentesSelecionados.join(', ')  // Combina todos os presentes em uma única string
+        }
     };
 
     // Enviar os dados usando Fetch API
@@ -75,4 +77,5 @@ document.getElementById('enviar').addEventListener('click', function () {
         alert('Houve um erro ao enviar sua lista. Por favor, tente novamente.');
     });
 });
+
 
