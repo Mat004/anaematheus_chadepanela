@@ -1,13 +1,18 @@
 // Armazenar presentes selecionados
 let presentesSelecionados = [];
 
-// Inicializar
+// Inicializar o evento ao clicar no botão "iniciar"
 document.getElementById('iniciar').addEventListener('click', function () {
     const nome = document.getElementById('nome').value;
+    
     if (nome) {
         localStorage.setItem('nome', nome);  // Armazenar nome para referência
-        document.getElementById('form-nome').classList.add('hidden');
-        document.getElementById('tela-presentes').classList.remove('hidden');
+        
+        // Esconder a tela de inserção de nome
+        document.getElementById('form-nome').style.display = 'none';
+        
+        // Mostrar a tela de presentes
+        document.getElementById('tela-presentes').style.display = 'block';
     } else {
         alert('Por favor, insira seu nome completo!');
     }
