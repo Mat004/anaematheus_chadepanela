@@ -3,10 +3,10 @@ let presentesSelecionados = [];
 
 // Inicializar o evento ao clicar no botão "iniciar"
 document.getElementById('iniciar').addEventListener('click', function () {
-    const nome = document.getElementById('nome').value;
+    const nome = document.getElementById('nome').value.trim(); // Remover espaços em branco
     
     if (nome) {
-        localStorage.setItem('nome', nome);  // Armazenar nome para referência
+        localStorage.setItem('nome', nome);  // Armazenar nome no localStorage
         
         // Esconder a tela de inserção de nome
         document.getElementById('form-nome').style.display = 'none';
@@ -29,18 +29,25 @@ document.querySelectorAll('.escolher').forEach(button => {
 
 // Enviar dados para o Google Sheets via SheetDB
 document.getElementById('enviar').addEventListener('click', function () {
-    const nome = localStorage.getItem('nome');
+    const nome = localStorage.getItem('nome');  // Recuperar nome do localStorage
     const data = new Date().toLocaleString();
+
+    if (!nome) {
+        alert('Nome não encontrado. Por favor, insira seu nome novamente.');
+        document.getElementById('form-nome').style.display = 'block';
+        document.getElementById('tela-presentes').style.display = 'none';
+        return;
+    }
 
     if (presentesSelecionados.length === 0) {
         alert('Por favor, selecione ao menos um presente.');
         return;
     }
 
-    // Formatar os dados corretamente (remover o espaço após "nome")
+    // Formatar os dados corretamente
     const sheetData = [
         {
-            "nome": nome,  // Corrigir aqui
+            "nome": nome,  // Certificar que o nome está correto
             "data": data,
             "presentes": presentesSelecionados.join(', ')
         }
@@ -63,6 +70,8 @@ document.getElementById('enviar').addEventListener('click', function () {
     .then(data => {
         alert('Lista enviada com sucesso! Obrigado por participar do nosso Chá de Panela!');
         console.log('Success:', data);
+        // Limpar lista de presentes selecionados
+        presentesSelecionados = [];
     })
     .catch((error) => {
         console.error('Error:', error);
