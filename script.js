@@ -1,16 +1,14 @@
-// Armazenar presentes selecionados
-let presentesSelecionados = [];
-
-// Inicializar o evento ao clicar no botão "iniciar"
+// Inicializar eventos
 document.getElementById('iniciar').addEventListener('click', function () {
     const nome = document.getElementById('nome').value.trim(); // Remover espaços em branco
-    
+
     if (nome) {
         localStorage.setItem('nome', nome);  // Armazenar nome no localStorage
-        
+        console.log('Nome salvo no localStorage:', nome); // Verificar se o nome foi salvo
+
         // Esconder a tela de inserção de nome
         document.getElementById('form-nome').style.display = 'none';
-        
+
         // Mostrar a tela de presentes
         document.getElementById('tela-presentes').style.display = 'block';
     } else {
@@ -18,22 +16,27 @@ document.getElementById('iniciar').addEventListener('click', function () {
     }
 });
 
+// Armazenar presentes selecionados
+let presentesSelecionados = [];
+
 // Adicionar presentes à lista
 document.querySelectorAll('.escolher').forEach(button => {
     button.addEventListener('click', function () {
         const presente = this.getAttribute('data-presente');
         presentesSelecionados.push(presente);
         alert(`${presente} foi adicionado à sua lista!`);
+        console.log('Presentes selecionados:', presentesSelecionados); // Verificar presentes
     });
 });
 
-// Enviar dados para o Google Sheets via SheetDB
+// Enviar dados para Google Sheets
 document.getElementById('enviar').addEventListener('click', function () {
     const nome = localStorage.getItem('nome');  // Recuperar nome do localStorage
     const data = new Date().toLocaleString();
 
     if (!nome) {
         alert('Nome não encontrado. Por favor, insira seu nome novamente.');
+        console.log('Erro: nome não encontrado no localStorage');
         document.getElementById('form-nome').style.display = 'block';
         document.getElementById('tela-presentes').style.display = 'none';
         return;
@@ -44,7 +47,7 @@ document.getElementById('enviar').addEventListener('click', function () {
         return;
     }
 
-    // Formatar os dados corretamente
+    // Dados a serem enviados
     const sheetData = [
         {
             "nome": nome,  // Certificar que o nome está correto
