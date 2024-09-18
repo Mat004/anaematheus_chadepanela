@@ -1,66 +1,9 @@
-// Inicializar
+// Inicializar o formulário de nome
 document.getElementById('iniciar').addEventListener('click', function () {
     const nome = document.getElementById('nome').value;
     if (nome) {
         localStorage.setItem('nome', nome);  // Armazenar nome para referência
-        document.getElementById('form-nome').classList.add('hidden');
-        document.getElementById('tela-presentes').classList.remove('hidden');
-    } else {
-        alert('Por favor, insira seu nome completo!');
-    }
-});
 
-// Armazenar presentes selecionados
-let presentesSelecionados = [];
-
-document.querySelectorAll('.escolher').forEach(button => {
-    button.addEventListener('click', function () {
-        const presente = this.getAttribute('data-presente');
-        presentesSelecionados.push(presente);
-        alert(`${presente} foi adicionado à sua lista!`);
-    });
-});
-
-// Enviar dados para Google Sheets
-document.getElementById('enviar').addEventListener('click', function () {
-    const nome = localStorage.getItem('nome');
-    const data = new Date().toLocaleString();
-    
-    if (presentesSelecionados.length === 0) {
-        alert('Por favor, selecione ao menos um presente.');
-        return;
-    }
-
-    const sheetData = {
-        nome: nome,
-        data: data,
-        presentes: presentesSelecionados.join(', ')
-    };
-
-    fetch('https://sheetdb.io/api/v1/lilmqffgjyxmh', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(sheetData),
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert('Lista enviada com sucesso! Obrigado por participar do nosso Chá de Panela!');
-        console.log('Success:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        alert('Houve um erro ao enviar sua lista.');
-    });
-});
-
-// Inicializar
-document.getElementById('iniciar').addEventListener('click', function () {
-    const nome = document.getElementById('nome').value;
-    if (nome) {
-        localStorage.setItem('nome', nome);  // Armazenar nome para referência
-        
         // Esconder a tela de inserção de nome
         document.getElementById('form-nome').style.display = 'none';
         
@@ -69,4 +12,61 @@ document.getElementById('iniciar').addEventListener('click', function () {
     } else {
         alert('Por favor, insira seu nome completo!');
     }
+});
+
+// Variável para armazenar os presentes selecionados
+let presentesSelecionados = [];
+
+// Selecionar presentes
+document.querySelectorAll('.escolher').forEach(button => {
+    button.addEventListener('click', function () {
+        const presente = this.getAttribute('data-presente');
+        if (!presentesSelecionados.includes(presente)) {  // Evita adicionar o mesmo presente mais de uma vez
+            presentesSelecionados.push(presente);
+            alert(`${presente} foi adicionado à sua lista!`);
+        } else {
+            alert('Esse presente já foi adicionado!');
+        }
+    });
+});
+
+// Enviar dados para o Google Sheets via SheetDB
+document.getElementById('enviar').addEventListener('click', function () {
+    const nome = localStorage.getItem('nome');  // Recuperar o nome armazenado
+    const data = new Date().toLocaleString();  // Pegar a data e hora atual
+    
+    // Verifica se ao menos um presente foi selecionado
+    if (presentesSelecionados.length === 0) {
+        alert('Por favor, selecione ao menos um presente.');
+        return;
+    }
+
+    // Preparar os dados para envio
+    const sheetData = {
+        nome: nome,
+        data: data,
+        presentes: presentesSelecionados.join(', ')  // Combina todos os presentes em uma única string
+    };
+
+    // Enviar os dados usando Fetch API
+    fetch('https://sheetdb.io/api/v1/lilmqffgjyxmh', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',  // Tipo de conteúdo enviado
+        },
+        body: JSON.stringify(sheetData),  // Converter o objeto JS em JSON
+    })
+    .then(response => response.json())  // Processar a resposta
+    .then(data => {
+        if (data.created) {  // Verifica se os dados foram enviados corretamente
+            alert('Lista enviada com sucesso! Obrigado por participar do nosso Chá de Panela!');
+            console.log('Success:', data);
+        } else {
+            throw new Error('Erro ao criar registro no Google Sheets');
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('Houve um erro ao enviar sua lista. Por favor, tente novamente.');
+    });
 });
