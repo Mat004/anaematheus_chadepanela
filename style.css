@@ -133,7 +133,6 @@ button:hover {
     margin: 0 20px;   /* Espaçamento entre as fotos */
     align-self: center;
 }
-
 /* Estilo para a lista de presentes */
 #presentes {
     display: flex;
@@ -144,19 +143,21 @@ button:hover {
 
 .presente {
     text-align: center;
-    width: 200px;  /* Definir uma largura fixa para os itens de presente */
+    width: 200px;  /* Largura fixa para os itens de presente */
     margin: 10px;
     padding: 20px;
     background-color: #fce4ec; /* Fundo suave */
     border-radius: 15px;
     border: 2px dashed #f48fb1; /* Borda pontilhada */
+    box-sizing: border-box;  /* Garante que o padding seja incluído no tamanho do elemento */
 }
 
 /* Imagens dos presentes */
 .img-presente {
-    width: 100%;       /* Ocupa toda a largura do contêiner do presente */
-    height: 180px;     /* Define uma altura fixa para as imagens */
-    object-fit: cover; /* Mantém a proporção da imagem enquanto a ajusta ao contêiner */
+    width: 100%;       /* A imagem ocupará toda a largura do contêiner */
+    height: auto;      /* Mantém a proporção correta da imagem */
+    max-height: 150px; /* Altura máxima para garantir proporção */
+    object-fit: contain; /* A imagem se ajusta ao contêiner sem ser cortada */
     border-radius: 10px;
     margin-bottom: 10px;
 }
@@ -176,6 +177,7 @@ button {
 button:hover {
     background-color: #ec407a; /* Cor de destaque ao passar o mouse */
 }
+
 
 
 
