@@ -258,3 +258,23 @@ window.addEventListener('load', () => {
 document.querySelectorAll('.escolher').forEach(button => {
     button.addEventListener('click', verificarDisponibilidadePresentesGoogleSheets);
 });
+
+// Atualização ao selecionar um presente
+document.querySelectorAll('.escolher').forEach(button => {
+    button.addEventListener('click', function () {
+        const presente = this.getAttribute('data-presente');
+
+        // Evitar seleção duplicada
+        if (presentesSelecionados.includes(presente)) {
+            alert('Este presente já foi selecionado!');
+            return;
+        }
+
+        // Adicionar o presente à lista de selecionados
+        presentesSelecionados.push(presente);
+        this.textContent = 'Selecionado';
+        this.classList.add('selecionado');
+        this.classList.remove('escolher');
+        this.disabled = true;
+    });
+});
