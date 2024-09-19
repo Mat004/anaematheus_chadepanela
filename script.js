@@ -1,16 +1,12 @@
 // Inicializar eventos
 document.getElementById('iniciar').addEventListener('click', function () {
-    const nome = document.getElementById('nome').value.trim(); // Remover espaços em branco
+    const nome = document.getElementById('nome').value.trim();
 
     if (nome) {
-        localStorage.setItem('nomeCompleto', nome);  // Armazenar nome no localStorage com a chave "nomeCompleto"
-        console.log('Nome salvo no localStorage:', nome); // Verificar se o nome foi salvo
-
-        // Esconder a tela de inserção de nome
-        document.getElementById('form-nome').style.display = 'none';
-
-        // Mostrar a tela de presentes
-        document.getElementById('tela-presentes').style.display = 'block';
+        localStorage.setItem('nomeCompleto', nome);  // Armazenar nome no localStorage
+        console.log('Nome salvo no localStorage:', nome);
+        document.getElementById('form-nome').style.display = 'none';  // Esconder a tela de inserção de nome
+        document.getElementById('tela-presentes').style.display = 'block';  // Mostrar a tela de presentes
     } else {
         alert('Por favor, insira seu nome completo!');
     }
@@ -24,7 +20,6 @@ document.querySelectorAll('.escolher').forEach(button => {
     button.addEventListener('click', function () {
         const presente = this.getAttribute('data-presente');
 
-        // Evitar que o presente seja selecionado mais de uma vez
         if (presentesSelecionados.includes(presente)) {
             alert('Este presente já foi selecionado!');
             return;
@@ -38,15 +33,17 @@ document.querySelectorAll('.escolher').forEach(button => {
         this.textContent = 'Selecionado';
         this.classList.add('selecionado');
         this.disabled = true;
+
+        // Verificar disponibilidade novamente
+        verificarDisponibilidadePresentesGoogleSheets();
     });
 });
 
 // Enviar dados para Google Sheets
 document.getElementById('enviar').addEventListener('click', function () {
-    const nome = localStorage.getItem('nomeCompleto');  // Recuperar nome do localStorage com a chave "nomeCompleto"
-    const dataHora = new Date().toLocaleString();  // Data e hora atual
+    const nome = localStorage.getItem('nomeCompleto');
+    const dataHora = new Date().toLocaleString();
 
-    // Verificação de depuração
     console.log('Nome:', nome);
     console.log('DataHora:', dataHora);
     console.log('Presentes Selecionados:', presentesSelecionados);
@@ -61,27 +58,22 @@ document.getElementById('enviar').addEventListener('click', function () {
         return;
     }
 
-    // Dados a serem enviados (campos correspondem exatamente às colunas da planilha)
     const sheetData = {
         "data": [
             {
-                "data": dataHora,  // Nome da coluna "data" na planilha
-                "nomeCompleto": nome.trim(),  // Nome da coluna "nomeCompleto" na planilha
-                "presentes": presentesSelecionados.join(', ')  // Nome da coluna "presentes" na planilha
+                "data": dataHora,
+                "nomeCompleto": nome.trim(),
+                "presentes": presentesSelecionados.join(', ')
             }
         ]
     };
 
-    // Verificação de depuração para garantir que os dados estão corretos
-    console.log('Dados a serem enviados:', sheetData);
-
-    // Fazer a requisição POST para o SheetDB
     fetch('https://sheetdb.io/api/v1/lilmqffgjyxmh', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(sheetData),  // Enviar os dados no formato correto
+        body: JSON.stringify(sheetData),
     })
     .then(response => {
         if (!response.ok) {
@@ -92,7 +84,6 @@ document.getElementById('enviar').addEventListener('click', function () {
     .then(data => {
         alert('Lista enviada com sucesso! Obrigado por participar do nosso Chá de Panela!');
         console.log('Sucesso:', data);
-        // Limpar lista de presentes selecionados
         presentesSelecionados = [];
     })
     .catch((error) => {
@@ -193,23 +184,20 @@ const limitesPresentes = {
 };
 
 
-// Substitua por seu ID da planilha (da URL da planilha) e API key gerada no Google Cloud
+// Substitua por seu ID da planilha e API key gerada no Google Cloud
 const spreadsheetId = '1ybA0mg-t5aC_60pW3JqwQ7bKXK-QKj8rUhwHvg2knpQ';
 const apiKey = 'AIzaSyBYSJFlWRuvhdgdSgEeDZyON3zdEUTNfq4';
 
-// Função para buscar os dados da planilha usando a API do Google Sheets
+// Função para verificar disponibilidade
 function verificarDisponibilidadePresentesGoogleSheets() {
-    const range = 'Sheet1!A:C';  // Defina o intervalo que você quer ler na planilha (por exemplo, A1 até C100)
-    
-    // URL da API para acessar a planilha
+    const range = 'Sheet1!A:C';  // Intervalo da planilha
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
-    
+
     fetch(url)
         .then(response => response.json())
         .then(data => {
             const rows = data.values;
             if (rows.length) {
-                // Mapeamento para contar presentes
                 const contagemPresentes = {};
 
                 rows.forEach(row => {
@@ -223,11 +211,15 @@ function verificarDisponibilidadePresentesGoogleSheets() {
                     });
                 });
 
-                // Atualizar a interface com a quantidade e limites dos presentes
+                // Atualizar botões com base na disponibilidade
                 document.querySelectorAll('.escolher').forEach(button => {
                     const presente = button.getAttribute('data-presente');
                     const quantidade = contagemPresentes[presente] || 0;
                     const limite = limitesPresentes[presente];
+
+                    if (button.classList.contains('selecionado')) {
+                        return;  // Não mudar se já estiver selecionado
+                    }
 
                     if (quantidade >= limite) {
                         button.textContent = 'Indisponível';
@@ -246,13 +238,12 @@ function verificarDisponibilidadePresentesGoogleSheets() {
         });
 }
 
-// Função para verificar a disponibilidade dos presentes ao carregar a página
+// Verificar disponibilidade ao carregar a página
 window.addEventListener('load', verificarDisponibilidadePresentesGoogleSheets);
 
 // Verificar disponibilidade após cada seleção
 document.querySelectorAll('.escolher').forEach(button => {
     button.addEventListener('click', verificarDisponibilidadePresentesGoogleSheets);
 });
-
 
 
