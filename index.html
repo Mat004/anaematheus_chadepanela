@@ -3,24 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chá de Panela - Teste com Dados Estáticos</title>
+    <title>Chá de Panela - Teste com Captura de Nome</title>
 </head>
 <body>
-    <h1>Teste de Envio com Dados Estáticos</h1>
+    <h1>Teste de Envio com Captura de Nome</h1>
     
-    <!-- Botão para iniciar o teste -->
-    <button id="enviarDados">Enviar Dados Estáticos</button>
+    <!-- Tela inicial: Solicita o nome completo -->
+    <div id="form-nome">
+        <h2>Bem-vindo ao Chá de Panela!</h2>
+        <p>Por favor, insira seu nome completo para continuar:</p>
+        <input type="text" id="nome" placeholder="Nome completo">
+        <button id="iniciar">Entrar</button>
+    </div>
+
+    <!-- Tela de presentes -->
+    <div id="tela-presentes" style="display:none;">
+        <button id="enviarDados">Enviar Dados com Nome</button>
+    </div>
 
     <script>
-        // Função de envio com dados estáticos
+        // Inicializar eventos
+        document.getElementById('iniciar').addEventListener('click', function () {
+            const nome = document.getElementById('nome').value.trim();
+
+            if (nome) {
+                localStorage.setItem('nome', nome);  // Armazenar nome no localStorage
+                console.log('Nome salvo no localStorage:', nome);  // Verificar se o nome foi salvo
+
+                // Esconder a tela de inserção de nome e mostrar a tela de presentes
+                document.getElementById('form-nome').style.display = 'none';
+                document.getElementById('tela-presentes').style.display = 'block';
+            } else {
+                alert('Por favor, insira seu nome completo!');
+            }
+        });
+
+        // Função de envio com nome dinâmico
         document.getElementById('enviarDados').addEventListener('click', function () {
-            // Dados estáticos para o teste
+            // Recuperar nome do localStorage
+            const nome = localStorage.getItem('nome');
+            const dataHora = new Date().toLocaleString();  // Data e hora atual
+
+            // Verificação de depuração
+            console.log('Nome recuperado do localStorage:', nome);
+            console.log('DataHora:', dataHora);
+
+            if (!nome || nome === "") {
+                alert('Nome não encontrado. Por favor, insira seu nome novamente.');
+                return;
+            }
+
+            // Dados a serem enviados
             const sheetData = {
                 "data": [
                     {
-                        "data": "20/09/2023 14:30",  // Data estática
-                        "nome": "Teste Estático",  // Nome estático
-                        "presentes": "Conjunto de Panelas"  // Presente estático
+                        "data": dataHora,  // Data dinâmica
+                        "nome": nome.trim(),  // Nome recuperado
+                        "presentes": "Jogo de Toalhas"  // Presente estático para teste
                     }
                 ]
             };
@@ -43,7 +82,7 @@
                 return response.json();
             })
             .then(data => {
-                alert('Dados estáticos enviados com sucesso!');
+                alert('Dados com nome enviados com sucesso!');
                 console.log('Sucesso:', data);
             })
             .catch((error) => {
