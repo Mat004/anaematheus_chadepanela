@@ -3,94 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chá de Panela - Teste com Captura de Nome</title>
+    <title>Chá de Panela Ana & Matheus</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Teste de Envio com Captura de Nome</h1>
-    
     <!-- Tela inicial: Solicita o nome completo -->
-    <div id="form-nome">
+    <div id="form-nome" class="centered">
         <h2>Bem-vindo ao Chá de Panela!</h2>
         <p>Por favor, insira seu nome completo para continuar:</p>
         <input type="text" id="nome" placeholder="Nome completo">
         <button id="iniciar">Entrar</button>
     </div>
 
-    <!-- Tela de presentes -->
-    <div id="tela-presentes" style="display:none;">
-        <button id="enviarDados">Enviar Dados com Nome</button>
+    <!-- Tela de presentes (inicialmente escondida) -->
+    <div id="tela-presentes" class="hidden">
+        <header>
+            <h1>Chá de Panela Ana & Matheus</h1>
+            <p>Estamos muito felizes em celebrar com você!</p>
+        </header>
+
+        <div id="fotos">
+            <div class="foto">
+                <img src="img/Ana.jpg" alt="Foto Ana">
+                <p>Ana</p>
+            </div>
+            <div class="foto">
+                <img src="img/Matheus.jpg" alt="Foto Matheus">
+                <p>Matheus</p>
+            </div>
+        </div>
+
+        <section>
+            <h2>Lista de Presentes</h2>
+            <div id="presentes">
+                <!-- Exemplo de um presente -->
+                <div class="presente">
+                    <p>Conjunto de Panelas</p>
+                    <button class="escolher" data-presente="Conjunto de Panelas">Escolher</button>
+                </div>
+                <div class="presente">
+                    <p>Conjunto de Talheres</p>
+                    <button class="escolher" data-presente="Conjunto de Talheres">Escolher</button>
+                </div>
+                <div class="presente">
+                    <p>Jogo de Toalhas</p>
+                    <button class="escolher" data-presente="Jogo de Toalhas">Escolher</button>
+                </div>
+                <!-- Adicione mais presentes conforme necessário -->
+            </div>
+        </section>
+
+        <!-- Botão flutuante de envio -->
+        <button id="enviar" class="flutuante">💌 Enviar Lista</button>
     </div>
 
-    <script>
-        // Inicializar eventos
-        document.getElementById('iniciar').addEventListener('click', function () {
-            const nome = document.getElementById('nome').value.trim();
-
-            if (nome) {
-                localStorage.setItem('nome', nome);  // Armazenar nome no localStorage
-                console.log('Nome salvo no localStorage:', nome);  // Verificar se o nome foi salvo
-
-                // Esconder a tela de inserção de nome e mostrar a tela de presentes
-                document.getElementById('form-nome').style.display = 'none';
-                document.getElementById('tela-presentes').style.display = 'block';
-            } else {
-                alert('Por favor, insira seu nome completo!');
-            }
-        });
-
-        // Função de envio com nome dinâmico
-document.getElementById('enviarDados').addEventListener('click', function () {
-    // Recuperar nome do localStorage
-    const nome = localStorage.getItem('nome');
-    const dataHora = new Date().toLocaleString();  // Data e hora atual
-
-    // Verificação de depuração
-    console.log('Nome recuperado do localStorage:', nome);
-    console.log('DataHora:', dataHora);
-
-    if (!nome || nome === "") {
-        alert('Nome não encontrado. Por favor, insira seu nome novamente.');
-        return;
-    }
-
-    // Dados a serem enviados (campo 'nomeCompleto' em vez de 'nome')
-    const sheetData = {
-        "data": [
-            {
-                "data": dataHora,  // Data dinâmica
-                "nomeCompleto": nome.trim(),  // Nome agora está com a chave 'nomeCompleto'
-                "presentes": "Jogo de Toalhas"  // Presente estático para teste
-            }
-        ]
-    };
-
-    // Verificação de depuração no console
-    console.log('Dados a serem enviados:', sheetData);
-
-    // Fazer a requisição POST para o SheetDB
-    fetch('https://sheetdb.io/api/v1/lilmqffgjyxmh', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(sheetData),  // Enviar os dados no formato correto
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Erro ao criar registro no Google Sheets');
-        }
-        return response.json();
-    })
-    .then(data => {
-        alert('Dados com nome enviados com sucesso!');
-        console.log('Sucesso:', data);
-    })
-    .catch((error) => {
-        console.error('Erro:', error);
-        alert('Houve um erro ao enviar os dados. Detalhes do erro: ' + error.message);
-    });
-});
-
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
