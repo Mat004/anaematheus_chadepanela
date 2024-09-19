@@ -150,8 +150,14 @@ function verificarDisponibilidadePresentes() {
         });
 }
 
-// Executar a função imediatamente ao carregar a página
-verificarDisponibilidadePresentes();
+// Verificar a disponibilidade dos presentes ao carregar a página
+window.addEventListener('load', verificarDisponibilidadePresentes);
 
-// Definir uma rotina para executar a função a cada 2 minutos (120000 ms)
-setInterval(verificarDisponibilidadePresentes, 120000);
+// Verificar a disponibilidade dos presentes após cada seleção de presente
+document.querySelectorAll('.escolher').forEach(button => {
+    button.addEventListener('click', function () {
+        // Após selecionar um presente, verificar novamente
+        verificarDisponibilidadePresentes();
+    });
+});
+
