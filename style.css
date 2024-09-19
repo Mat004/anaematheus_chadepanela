@@ -133,6 +133,7 @@ button:hover {
     margin: 0 20px;   /* Espaçamento entre as fotos */
     align-self: center;
 }
+
 /* Estilo para a lista de presentes */
 #presentes {
     display: flex;
@@ -142,6 +143,9 @@ button:hover {
 }
 
 .presente {
+    display: flex;
+    flex-direction: column; /* Organiza os elementos verticalmente */
+    justify-content: space-between; /* Garante que o espaço seja distribuído */
     text-align: center;
     width: 200px;  /* Largura fixa para os itens de presente */
     margin: 10px;
@@ -149,22 +153,23 @@ button:hover {
     background-color: #fce4ec; /* Fundo suave */
     border-radius: 15px;
     border: 2px dashed #f48fb1; /* Borda pontilhada */
-    box-sizing: border-box;  /* Garante que o padding seja incluído no tamanho do elemento */
+    box-sizing: border-box;  /* Garante que padding e border são incluídos no tamanho do elemento */
+    height: 320px; /* Altura fixa para manter todos os contêineres do mesmo tamanho */
 }
 
 /* Imagens dos presentes */
 .img-presente {
-    width: 100%;       /* A imagem ocupará toda a largura do contêiner */
-    height: auto;      /* Mantém a proporção correta da imagem */
-    max-height: 150px; /* Altura máxima para garantir proporção */
-    object-fit: contain; /* A imagem se ajusta ao contêiner sem ser cortada */
+    width: 100%;       /* Garante que a imagem ocupe toda a largura do contêiner */
+    height: auto;      /* Mantém a proporção da imagem */
+    max-height: 150px; /* Limita a altura das imagens */
+    object-fit: contain; /* Garante que a imagem não seja cortada ou deformada */
     border-radius: 10px;
     margin-bottom: 10px;
 }
 
 button {
     padding: 10px 20px;
-    margin-top: 10px;
+    margin-top: auto; /* Garante que o botão fique no final do contêiner */
     background-color: #f06292; /* Cor rosada */
     color: white;
     border: none;
@@ -177,6 +182,7 @@ button {
 button:hover {
     background-color: #ec407a; /* Cor de destaque ao passar o mouse */
 }
+
 
 
 
