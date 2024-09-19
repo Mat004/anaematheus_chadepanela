@@ -114,7 +114,7 @@ const apiKey = 'AIzaSyBYSJFlWRuvhdgdSgEeDZyON3zdEUTNfq4';
 
 // Função para buscar os dados da planilha usando a API do Google Sheets
 function verificarDisponibilidadePresentesGoogleSheets() {
-    const range = 'Página1!A:C';  // Defina o intervalo que você quer ler na planilha (por exemplo, A1 até C100)
+    const range = 'Sheet1!A:C';  // Defina o intervalo que você quer ler na planilha (por exemplo, A1 até C100)
     
     // URL da API para acessar a planilha
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
