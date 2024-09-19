@@ -124,6 +124,7 @@ button:hover {
 .selecionado {
     background-color: #4CAF50;  /* Cor verde indicando seleção */
     color: white;
-    cursor: not-allowed;  /* Cursor não permite mais clique */
+    cursor: not-allowed;  /* Cursor desativado */
 }
+
 
