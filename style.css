@@ -246,6 +246,9 @@ img.img-presente {
     cursor: not-allowed;
 }
 
+footer {
+    display: none;
+}
 
 
 

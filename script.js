@@ -268,3 +268,9 @@ window.onload = function() {
     window.scrollTo(0, 0);          // Força a rolagem para o topo
 };
 
+// Impedir rolagem indesejada
+document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+        window.scrollTo(0, 0); // Garantir que a página inicie no topo
+    }, 100); // Ajuste o tempo conforme necessário
+});
