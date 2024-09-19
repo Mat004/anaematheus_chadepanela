@@ -212,6 +212,55 @@ footer p {
     background-color: grey;     /* Garante que a cor não mude ao passar o mouse */
 }
 
+/* Estilos gerais para desktop */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#presentes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.presente {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    margin: 10px;
+    text-align: center;
+}
+
+img.img-presente {
+    width: 150px;
+    height: auto;
+}
+
+/* Responsivo para telas menores (celulares) */
+@media screen and (max-width: 768px) {
+    #presentes {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .presente {
+        width: 90%;
+        margin: 20px 0;
+    }
+
+    img.img-presente {
+        width: 100%;
+    }
+
+    button.escolher {
+        width: 100%;
+        font-size: 18px;
+    }
+}
+
 
 
 
