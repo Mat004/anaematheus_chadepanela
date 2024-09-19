@@ -108,56 +108,65 @@ const limitesPresentes = {
     "Jogo de Toalhas": 3
 };
 
-// Função para verificar o status da planilha e atualizar a disponibilidade
-function verificarDisponibilidadePresentes() {
-    fetch('https://sheetdb.io/api/v1/lilmqffgjyxmh')  // Substitua pelo seu endpoint da SheetDB
+// Substitua por seu ID da planilha (da URL da planilha) e API key gerada no Google Cloud
+const spreadsheetId = '1ybA0mg-t5aC_60pW3JqwQ7bKXK-QKj8rUhwHvg2knpQ';
+const apiKey = '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';
+
+// Função para buscar os dados da planilha usando a API do Google Sheets
+function verificarDisponibilidadePresentesGoogleSheets() {
+    const range = 'Página1!A:C';  // Defina o intervalo que você quer ler na planilha (por exemplo, A1 até C100)
+    
+    // URL da API para acessar a planilha
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
+    
+    fetch(url)
         .then(response => response.json())
         .then(data => {
-            // Mapear os presentes contados
-            const contagemPresentes = {};
+            const rows = data.values;
+            if (rows.length) {
+                // Mapeamento para contar presentes
+                const contagemPresentes = {};
 
-            data.forEach(item => {
-                const presentesSelecionados = item.presentes.split(', ');
-                presentesSelecionados.forEach(presente => {
-                    if (!contagemPresentes[presente]) {
-                        contagemPresentes[presente] = 1;
+                rows.forEach(row => {
+                    const presentesSelecionados = row[2] ? row[2].split(', ') : [];
+                    presentesSelecionados.forEach(presente => {
+                        if (!contagemPresentes[presente]) {
+                            contagemPresentes[presente] = 1;
+                        } else {
+                            contagemPresentes[presente]++;
+                        }
+                    });
+                });
+
+                // Atualizar a interface com a quantidade e limites dos presentes
+                document.querySelectorAll('.escolher').forEach(button => {
+                    const presente = button.getAttribute('data-presente');
+                    const quantidade = contagemPresentes[presente] || 0;
+                    const limite = limitesPresentes[presente];
+
+                    if (quantidade >= limite) {
+                        button.textContent = 'Indisponível';
+                        button.disabled = true;
+                        button.classList.add('indisponivel');
                     } else {
-                        contagemPresentes[presente]++;
+                        button.textContent = 'Escolher';
+                        button.disabled = false;
+                        button.classList.remove('indisponivel');
                     }
                 });
-            });
-
-            // Verificar se algum presente atingiu o limite
-            document.querySelectorAll('.escolher').forEach(button => {
-                const presente = button.getAttribute('data-presente');
-                const quantidade = contagemPresentes[presente] || 0;
-                const limite = limitesPresentes[presente];
-
-                // Se a quantidade for igual ou superior ao limite, o presente fica indisponível
-                if (quantidade >= limite) {
-                    button.textContent = 'Indisponível';
-                    button.disabled = true;
-                    button.classList.add('indisponivel');  // Classe para estilo de indisponível
-                } else {
-                    button.textContent = 'Escolher';
-                    button.disabled = false;
-                    button.classList.remove('indisponivel');
-                }
-            });
+            }
         })
         .catch(error => {
-            console.error('Erro ao verificar a planilha:', error);
+            console.error('Erro ao acessar a planilha do Google Sheets:', error);
         });
 }
 
-// Verificar a disponibilidade dos presentes ao carregar a página
-window.addEventListener('load', verificarDisponibilidadePresentes);
+// Função para verificar a disponibilidade dos presentes ao carregar a página
+window.addEventListener('load', verificarDisponibilidadePresentesGoogleSheets);
 
-// Verificar a disponibilidade dos presentes após cada seleção de presente
+// Verificar disponibilidade após selecionar um presente
 document.querySelectorAll('.escolher').forEach(button => {
-    button.addEventListener('click', function () {
-        // Após selecionar um presente, verificar novamente
-        verificarDisponibilidadePresentes();
-    });
+    button.addEventListener('click', verificarDisponibilidadePresentesGoogleSheets);
 });
+
 
