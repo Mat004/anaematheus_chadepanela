@@ -249,9 +249,10 @@ function verificarDisponibilidadePresentesGoogleSheets() {
 // Função para verificar a disponibilidade dos presentes ao carregar a página
 window.addEventListener('load', verificarDisponibilidadePresentesGoogleSheets);
 
-// Verificar disponibilidade após selecionar um presente
+// Verificar disponibilidade após cada seleção
 document.querySelectorAll('.escolher').forEach(button => {
     button.addEventListener('click', verificarDisponibilidadePresentesGoogleSheets);
 });
+
 
 
