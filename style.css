@@ -134,4 +134,45 @@ button:hover {
     align-self: center;
 }
 
+/* Estilo para a lista de presentes */
+#presentes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.presente {
+    text-align: center;
+    width: 180px;
+    margin: 10px;
+    padding: 20px;
+    background-color: #fce4ec; /* Fundo suave */
+    border-radius: 15px;
+    border: 2px dashed #f48fb1; /* Borda pontilhada */
+}
+
+/* Imagens dos presentes */
+.img-presente {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #f06292; /* Cor rosada */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #ec407a; /* Cor de destaque ao passar o mouse */
+}
 
