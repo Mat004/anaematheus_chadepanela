@@ -110,7 +110,7 @@ const limitesPresentes = {
 
 // Substitua por seu ID da planilha (da URL da planilha) e API key gerada no Google Cloud
 const spreadsheetId = '1ybA0mg-t5aC_60pW3JqwQ7bKXK-QKj8rUhwHvg2knpQ';
-const apiKey = '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';
+const apiKey = 'AIzaSyBYSJFlWRuvhdgdSgEeDZyON3zdEUTNfq4';
 
 // Função para buscar os dados da planilha usando a API do Google Sheets
 function verificarDisponibilidadePresentesGoogleSheets() {
