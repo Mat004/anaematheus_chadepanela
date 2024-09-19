@@ -29,8 +29,11 @@ document.querySelectorAll('.escolher').forEach(button => {
         alert(`${presente} foi adicionado à sua lista!`);
         console.log('Presentes selecionados:', presentesSelecionados);
 
-        // Alterar o texto do botão para "Selecionado" e mudar a cor
+        
+        // Alterar o texto e a cor do botão imediatamente
         this.textContent = 'Selecionado';
+        this.style.backgroundColor = 'grey'; // Mudar a cor para cinza imediatamente
+        this.style.cursor = 'not-allowed'; // Mudar o cursor
         this.classList.add('selecionado');
         this.disabled = true;
 
