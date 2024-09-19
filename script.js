@@ -47,13 +47,15 @@ document.getElementById('enviar').addEventListener('click', function () {
         return;
     }
 
-    // Dados a serem enviados (note que agora estão dentro de um objeto "data")
+    // Dados a serem enviados (agora dentro de um array em "data")
     const sheetData = {
-        "data": {
-            "dataHora": dataHora,
-            "nome": nome.trim(),
-            "presentes": presentesSelecionados.join(', ')
-        }
+        "data": [
+            {
+                "dataHora": dataHora,
+                "nome": nome.trim(),
+                "presentes": presentesSelecionados.join(', ')
+            }
+        ]
     };
 
     // Fazer a requisição POST para o SheetDB
@@ -81,3 +83,4 @@ document.getElementById('enviar').addEventListener('click', function () {
         alert('Houve um erro ao enviar sua lista. Detalhes do erro: ' + error.message);
     });
 });
+
