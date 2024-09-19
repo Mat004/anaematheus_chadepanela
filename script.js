@@ -100,3 +100,4 @@ document.getElementById('enviar').addEventListener('click', function () {
         alert('Houve um erro ao enviar sua lista. Detalhes do erro: ' + error.message);
     });
 });
+
