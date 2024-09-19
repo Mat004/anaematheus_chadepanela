@@ -263,3 +263,8 @@ window.addEventListener('load', function() {
     window.scrollTo(0, 0);  // Força a rolagem para o topo da página
 });
 
+window.onload = function() {
+    document.activeElement.blur();  // Remove o foco de qualquer elemento
+    window.scrollTo(0, 0);          // Força a rolagem para o topo
+};
+
