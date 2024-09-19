@@ -34,11 +34,13 @@ document.getElementById('enviar').addEventListener('click', function () {
     const nome = localStorage.getItem('nome');  // Recuperar nome do localStorage
     const dataHora = new Date().toLocaleString();
 
+    // Adicionar logs para depuração
+    console.log('Nome:', nome);
+    console.log('DataHora:', dataHora);
+    console.log('Presentes Selecionados:', presentesSelecionados);
+
     if (!nome || nome === "") {
         alert('Nome não encontrado. Por favor, insira seu nome novamente.');
-        console.log('Erro: nome não encontrado no localStorage');
-        document.getElementById('form-nome').style.display = 'block';
-        document.getElementById('tela-presentes').style.display = 'none';
         return;
     }
 
@@ -47,16 +49,19 @@ document.getElementById('enviar').addEventListener('click', function () {
         return;
     }
 
-    // Dados a serem enviados (agora dentro de um array em "data")
+    // Dados a serem enviados
     const sheetData = {
         "data": [
             {
-                "dataHora": dataHora,
-                "nome": nome.trim(),
-                "presentes": presentesSelecionados.join(', ')
+                "Data": dataHora,
+                "Nome": nome.trim(),
+                "Presentes": presentesSelecionados.join(', ')
             }
         ]
     };
+
+    // Log dos dados a serem enviados
+    console.log('Dados a serem enviados:', sheetData);
 
     // Fazer a requisição POST para o SheetDB
     fetch('https://sheetdb.io/api/v1/lilmqffgjyxmh', {
@@ -64,7 +69,7 @@ document.getElementById('enviar').addEventListener('click', function () {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(sheetData),  // Enviar o objeto como JSON
+        body: JSON.stringify(sheetData),
     })
     .then(response => {
         if (!response.ok) {
@@ -74,7 +79,6 @@ document.getElementById('enviar').addEventListener('click', function () {
     })
     .then(data => {
         alert('Lista enviada com sucesso! Obrigado por participar do nosso Chá de Panela!');
-        console.log('Success:', data);
         // Limpar lista de presentes selecionados
         presentesSelecionados = [];
     })
@@ -83,4 +87,5 @@ document.getElementById('enviar').addEventListener('click', function () {
         alert('Houve um erro ao enviar sua lista. Detalhes do erro: ' + error.message);
     });
 });
+
 
