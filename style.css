@@ -246,29 +246,7 @@ img.img-presente {
     cursor: not-allowed;
 }
 
-/* Responsivo para dispositivos móveis */
-@media screen and (max-width: 768px) {
-    .presente {
-        width: 100%;
-        margin: 15px 0;
-    }
 
-    img.img-presente {
-        width: 100%; /* Garante que a imagem ocupe toda a largura em telas menores */
-        max-height: 150px;
-    }
-
-    button {
-        width: 100%;  /* Botão ocupa toda a largura do contêiner */
-        font-size: 16px;  /* Tamanho ajustado para dispositivos móveis */
-    }
-
-    /* Ajuste para o botão selecionado em telas menores */
-    .selecionado {
-        background-color: #888;  /* Cor cinza claro indicando seleção */
-        cursor: not-allowed;
-    }
-}
 
 
 
