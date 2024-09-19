@@ -19,13 +19,25 @@ document.getElementById('iniciar').addEventListener('click', function () {
 // Armazenar presentes selecionados
 let presentesSelecionados = [];
 
-// Adicionar presentes à lista
+// Adicionar presentes à lista e alterar o botão para "Selecionado"
 document.querySelectorAll('.escolher').forEach(button => {
     button.addEventListener('click', function () {
         const presente = this.getAttribute('data-presente');
+
+        // Evitar que o presente seja selecionado mais de uma vez
+        if (presentesSelecionados.includes(presente)) {
+            alert('Este presente já foi selecionado!');
+            return;
+        }
+
         presentesSelecionados.push(presente);
         alert(`${presente} foi adicionado à sua lista!`);
         console.log('Presentes selecionados:', presentesSelecionados); // Verificar presentes
+
+        // Alterar o texto do botão para "Selecionado" e mudar a cor
+        this.textContent = 'Selecionado';
+        this.classList.add('selecionado');  // Adiciona a classe CSS para mudar o estilo
+        this.disabled = true;  // Desabilitar o botão para evitar seleção repetida
     });
 });
 
