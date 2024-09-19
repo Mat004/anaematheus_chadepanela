@@ -32,9 +32,9 @@ document.querySelectorAll('.escolher').forEach(button => {
 // Enviar dados para Google Sheets
 document.getElementById('enviar').addEventListener('click', function () {
     const nome = localStorage.getItem('nome');  // Recuperar nome do localStorage
-    const dataHora = new Date().toLocaleString();
+    const dataHora = new Date().toLocaleString();  // Data e hora atual
 
-    // Adicionar logs para depuração
+    // Verificação de depuração
     console.log('Nome:', nome);
     console.log('DataHora:', dataHora);
     console.log('Presentes Selecionados:', presentesSelecionados);
@@ -49,18 +49,18 @@ document.getElementById('enviar').addEventListener('click', function () {
         return;
     }
 
-    // Dados a serem enviados
+    // Dados a serem enviados (campos correspondem exatamente às colunas da planilha)
     const sheetData = {
         "data": [
             {
-                "Data": dataHora,
-                "Nome": nome.trim(),
-                "Presentes": presentesSelecionados.join(', ')
+                "data": dataHora,  // Nome da coluna "data" na planilha
+                "nome": nome.trim(),  // Nome da coluna "nome" na planilha
+                "presentes": presentesSelecionados.join(', ')  // Nome da coluna "presentes" na planilha
             }
         ]
     };
 
-    // Log dos dados a serem enviados
+    // Verificação de depuração para garantir que os dados estão corretos
     console.log('Dados a serem enviados:', sheetData);
 
     // Fazer a requisição POST para o SheetDB
@@ -69,7 +69,7 @@ document.getElementById('enviar').addEventListener('click', function () {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(sheetData),
+        body: JSON.stringify(sheetData),  // Enviar os dados no formato correto
     })
     .then(response => {
         if (!response.ok) {
@@ -79,13 +79,15 @@ document.getElementById('enviar').addEventListener('click', function () {
     })
     .then(data => {
         alert('Lista enviada com sucesso! Obrigado por participar do nosso Chá de Panela!');
+        console.log('Sucesso:', data);
         // Limpar lista de presentes selecionados
         presentesSelecionados = [];
     })
     .catch((error) => {
-        console.error('Error:', error);
+        console.error('Erro:', error);
         alert('Houve um erro ao enviar sua lista. Detalhes do erro: ' + error.message);
     });
 });
+
 
 
