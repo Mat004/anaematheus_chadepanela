@@ -32,12 +32,12 @@ document.querySelectorAll('.escolher').forEach(button => {
 
         presentesSelecionados.push(presente);
         alert(`${presente} foi adicionado à sua lista!`);
-        console.log('Presentes selecionados:', presentesSelecionados); // Verificar presentes
+        console.log('Presentes selecionados:', presentesSelecionados);
 
         // Alterar o texto do botão para "Selecionado" e mudar a cor
         this.textContent = 'Selecionado';
-        this.classList.add('selecionado');  // Adiciona a classe CSS para mudar o estilo
-        this.disabled = true;  // Desabilitar o botão para evitar seleção repetida
+        this.classList.add('selecionado');
+        this.disabled = true;
     });
 });
 
