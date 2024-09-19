@@ -241,7 +241,7 @@ img.img-presente {
 
 /* Estilo para o botão quando o presente estiver selecionado */
 .selecionado {
-    background-color: #a5aaa6de;  /* Cor cinza indicando seleção */
+    background-color: #a5aaa6f8;  /* Cor cinza indicando seleção */
     color: white;
     cursor: not-allowed;
 }
