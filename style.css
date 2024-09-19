@@ -200,6 +200,11 @@ footer p {
     margin: 5px 0;
 }
 
+.indisponivel {
+    background-color: grey;
+    cursor: not-allowed;
+    box-shadow: none;
+}
 
 
 
