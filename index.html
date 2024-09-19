@@ -3,60 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chá de Panela Ana & Matheus</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Chá de Panela - Teste com Dados Estáticos</title>
 </head>
 <body>
-    <!-- Tela inicial: Solicita o nome completo -->
-    <div id="form-nome" class="centered">
-        <h2>Bem-vindo ao Chá de Panela!</h2>
-        <p>Por favor, insira seu nome completo para continuar:</p>
-        <input type="text" id="nome" placeholder="Nome completo">
-        <button id="iniciar">Entrar</button>
-    </div>
+    <h1>Teste de Envio com Dados Estáticos</h1>
+    
+    <!-- Botão para iniciar o teste -->
+    <button id="enviarDados">Enviar Dados Estáticos</button>
 
-    <!-- Tela de presentes (inicialmente escondida) -->
-    <div id="tela-presentes" class="hidden">
-        <header>
-            <h1>Chá de Panela Ana & Matheus</h1>
-            <p>Estamos muito felizes em celebrar com você!</p>
-        </header>
+    <script>
+        // Função de envio com dados estáticos
+        document.getElementById('enviarDados').addEventListener('click', function () {
+            // Dados estáticos para o teste
+            const sheetData = {
+                "data": [
+                    {
+                        "data": "20/09/2023 14:30",  // Data estática
+                        "nome": "Teste Estático",  // Nome estático
+                        "presentes": "Conjunto de Panelas"  // Presente estático
+                    }
+                ]
+            };
 
-        <div id="fotos">
-            <div class="foto">
-                <img src="img/Ana.jpg" alt="Foto Ana">
-                <p>Ana</p>
-            </div>
-            <div class="foto">
-                <img src="img/Matheus.jpg" alt="Foto Matheus">
-                <p>Matheus</p>
-            </div>
-        </div>
+            // Verificação de depuração no console
+            console.log('Dados a serem enviados:', sheetData);
 
-        <section>
-            <h2>Lista de Presentes</h2>
-            <div id="presentes">
-                <!-- Exemplo de um presente -->
-                <div class="presente">
-                    <p>Conjunto de Panelas</p>
-                    <button class="escolher" data-presente="Conjunto de Panelas">Escolher</button>
-                </div>
-                <div class="presente">
-                    <p>Conjunto de Talheres</p>
-                    <button class="escolher" data-presente="Conjunto de Talheres">Escolher</button>
-                </div>
-                <div class="presente">
-                    <p>Jogo de Toalhas</p>
-                    <button class="escolher" data-presente="Jogo de Toalhas">Escolher</button>
-                </div>
-                <!-- Adicione mais presentes conforme necessário -->
-            </div>
-        </section>
-
-        <!-- Botão flutuante de envio -->
-        <button id="enviar" class="flutuante">💌 Enviar Lista</button>
-    </div>
-
-    <script src="script.js"></script>
+            // Fazer a requisição POST para o SheetDB
+            fetch('https://sheetdb.io/api/v1/lilmqffgjyxmh', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(sheetData),  // Enviar os dados no formato correto
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao criar registro no Google Sheets');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Dados estáticos enviados com sucesso!');
+                console.log('Sucesso:', data);
+            })
+            .catch((error) => {
+                console.error('Erro:', error);
+                alert('Houve um erro ao enviar os dados. Detalhes do erro: ' + error.message);
+            });
+        });
+    </script>
 </body>
 </html>
