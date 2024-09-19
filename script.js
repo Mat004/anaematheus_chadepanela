@@ -103,10 +103,44 @@ document.getElementById('enviar').addEventListener('click', function () {
 
 // Definir o limite de quantidade para cada presente (exemplo: 2 para "Conjunto de Panelas")
 const limitesPresentes = {
-    "Conjunto de Panelas": 2,
-    "Conjunto de Talheres": 2,
-    "Jogo de Toalhas": 3
+    "Abridor de garrafas e latas": 1,
+    "Açucareiro": 1,
+    "Afiador de facas": 1,
+    "Air fryer 2 em 1 - 11L (Philco)": 1,
+    "Aspirador de pó (Preto)": 1,
+    "Assadeiras antiaderentes": 1,
+    "Bacia plástica": 1,
+    "Balde dobrável (10L)": 1,
+    "Bandeja": 1,
+    "Batedor de ovos": 1,
+    "Bowls": 1,
+    "Cesto de lixo p/ banheiro (Inox)": 1,
+    "Cobertor": 2,
+    "Colheres de silicone": 1,
+    "Concha para molho": 1,
+    "Concha para sorvete": 1,
+    "Conjunto de peneiras": 1,
+    "Conjunto de potes herméticos (10 peças)": 1,
+    "Conjunto de pratos (rasos, fundos e sobremesa)": 1,
+    "Conjunto de tapete p/ cozinha": 3,
+    "Copos de medidas": 1,
+    "Copos para água (6 copos)": 1,
+    "Cuscuzeira": 1,
+    "Cutelo": 1,
+    "Descanso de panela (4 peças)": 1,
+    "Edredom p/ cama casal": 1,
+    "Escorredor de macarrão (Inox)": 1,
+    "Escorredor de pratos (Inox)": 1,
+    "Espátula": 1,
+    "Espremedor de alho (Inox)": 1,
+    "Espremedor de batatas (Inox)": 1,
+    "Espremedor de limão (Inox)": 1,
+    "Extrator de escama": 1,
+    "Faqueiro (Inox)": 1,
+    "Ferro de passar roupa (Black & Deck)": 1,
+    "Formas de bolo": 2
 };
+
 
 // Substitua por seu ID da planilha (da URL da planilha) e API key gerada no Google Cloud
 const spreadsheetId = '1ybA0mg-t5aC_60pW3JqwQ7bKXK-QKj8rUhwHvg2knpQ';
