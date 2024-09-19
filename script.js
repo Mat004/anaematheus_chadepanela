@@ -32,7 +32,7 @@ document.querySelectorAll('.escolher').forEach(button => {
 // Enviar dados para Google Sheets
 document.getElementById('enviar').addEventListener('click', function () {
     const nome = localStorage.getItem('nome');  // Recuperar nome do localStorage
-    const data = new Date().toLocaleString();
+    const dataHora = new Date().toLocaleString();
 
     if (!nome || nome === "") {
         alert('Nome não encontrado. Por favor, insira seu nome novamente.');
@@ -47,11 +47,13 @@ document.getElementById('enviar').addEventListener('click', function () {
         return;
     }
 
-    // Dados a serem enviados
+    // Dados a serem enviados (note que agora estão dentro de um objeto "data")
     const sheetData = {
-        "data": data,
-        "nome": nome.trim(), // Garantir que o nome é enviado corretamente
-        "presentes": presentesSelecionados.join(', ')
+        "data": {
+            "dataHora": dataHora,
+            "nome": nome.trim(),
+            "presentes": presentesSelecionados.join(', ')
+        }
     };
 
     // Fazer a requisição POST para o SheetDB
