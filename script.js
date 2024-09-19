@@ -39,6 +39,18 @@ document.querySelectorAll('.escolher').forEach(button => {
     });
 });
 
+// Função para manter o estado "Selecionado" ao carregar a página
+function manterEstadoSelecionado() {
+    document.querySelectorAll('.escolher').forEach(button => {
+        const presente = button.getAttribute('data-presente');
+        if (presentesSelecionados.includes(presente)) {
+            button.textContent = 'Selecionado';
+            button.classList.add('selecionado');
+            button.disabled = true;
+        }
+    });
+}
+
 // Enviar dados para Google Sheets
 document.getElementById('enviar').addEventListener('click', function () {
     const nome = localStorage.getItem('nomeCompleto');
@@ -183,7 +195,6 @@ const limitesPresentes = {
     "Varal portátil": 1
 };
 
-
 // Substitua por seu ID da planilha e API key gerada no Google Cloud
 const spreadsheetId = '1ybA0mg-t5aC_60pW3JqwQ7bKXK-QKj8rUhwHvg2knpQ';
 const apiKey = 'AIzaSyBYSJFlWRuvhdgdSgEeDZyON3zdEUTNfq4';
@@ -211,7 +222,6 @@ function verificarDisponibilidadePresentesGoogleSheets() {
                     });
                 });
 
-                // Atualizar botões com base na disponibilidade
                 document.querySelectorAll('.escolher').forEach(button => {
                     const presente = button.getAttribute('data-presente');
                     const quantidade = contagemPresentes[presente] || 0;
@@ -239,11 +249,12 @@ function verificarDisponibilidadePresentesGoogleSheets() {
 }
 
 // Verificar disponibilidade ao carregar a página
-window.addEventListener('load', verificarDisponibilidadePresentesGoogleSheets);
+window.addEventListener('load', () => {
+    verificarDisponibilidadePresentesGoogleSheets();
+    manterEstadoSelecionado(); // Manter o estado "Selecionado" ao carregar
+});
 
 // Verificar disponibilidade após cada seleção
 document.querySelectorAll('.escolher').forEach(button => {
     button.addEventListener('click', verificarDisponibilidadePresentesGoogleSheets);
 });
-
-
