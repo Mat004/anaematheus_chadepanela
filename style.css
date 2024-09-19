@@ -122,9 +122,16 @@ button:hover {
 
 /* Estilo para o botão quando o presente for selecionado */
 .selecionado {
-    background-color: #4CAF50;  /* Cor verde indicando seleção */
+    background-color: #a5aaa6de;  /* Cor verde indicando seleção */
     color: white;
     cursor: not-allowed;  /* Cursor desativado */
+}
+
+#heart-icon {
+    font-size: 48px;  /* Tamanho do coração */
+    color: #ec407a;   /* Cor rosa do coração */
+    margin: 0 20px;   /* Espaçamento entre as fotos */
+    align-self: center;
 }
 
 
