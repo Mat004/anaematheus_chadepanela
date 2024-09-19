@@ -259,4 +259,7 @@ document.querySelectorAll('.escolher').forEach(button => {
     button.addEventListener('click', verificarDisponibilidadePresentesGoogleSheets);
 });
 
+window.addEventListener('load', function() {
+    window.scrollTo(0, 0);  // Força a rolagem para o topo da página
+});
 
