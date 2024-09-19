@@ -3,7 +3,7 @@ document.getElementById('iniciar').addEventListener('click', function () {
     const nome = document.getElementById('nome').value.trim(); // Remover espaços em branco
 
     if (nome) {
-        localStorage.setItem('nome', nome);  // Armazenar nome no localStorage
+        localStorage.setItem('nomeCompleto', nome);  // Armazenar nome no localStorage com a chave "nomeCompleto"
         console.log('Nome salvo no localStorage:', nome); // Verificar se o nome foi salvo
 
         // Esconder a tela de inserção de nome
@@ -31,7 +31,7 @@ document.querySelectorAll('.escolher').forEach(button => {
 
 // Enviar dados para Google Sheets
 document.getElementById('enviar').addEventListener('click', function () {
-    const nome = localStorage.getItem('nome');  // Recuperar nome do localStorage
+    const nome = localStorage.getItem('nomeCompleto');  // Recuperar nome do localStorage com a chave "nomeCompleto"
     const dataHora = new Date().toLocaleString();  // Data e hora atual
 
     // Verificação de depuração
@@ -54,7 +54,7 @@ document.getElementById('enviar').addEventListener('click', function () {
         "data": [
             {
                 "data": dataHora,  // Nome da coluna "data" na planilha
-                "nome": nome.trim(),  // Nome da coluna "nome" na planilha
+                "nomeCompleto": nome.trim(),  // Nome da coluna "nomeCompleto" na planilha
                 "presentes": presentesSelecionados.join(', ')  // Nome da coluna "presentes" na planilha
             }
         ]
@@ -88,6 +88,3 @@ document.getElementById('enviar').addEventListener('click', function () {
         alert('Houve um erro ao enviar sua lista. Detalhes do erro: ' + error.message);
     });
 });
-
-
-
