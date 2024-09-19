@@ -101,3 +101,57 @@ document.getElementById('enviar').addEventListener('click', function () {
     });
 });
 
+// Definir o limite de quantidade para cada presente (exemplo: 2 para "Conjunto de Panelas")
+const limitesPresentes = {
+    "Conjunto de Panelas": 2,
+    "Conjunto de Talheres": 2,
+    "Jogo de Toalhas": 3
+};
+
+// Função para verificar o status da planilha e atualizar a disponibilidade
+function verificarDisponibilidadePresentes() {
+    fetch('https://sheetdb.io/api/v1/lilmqffgjyxmh')  // Substitua pelo seu endpoint da SheetDB
+        .then(response => response.json())
+        .then(data => {
+            // Mapear os presentes contados
+            const contagemPresentes = {};
+
+            data.forEach(item => {
+                const presentesSelecionados = item.presentes.split(', ');
+                presentesSelecionados.forEach(presente => {
+                    if (!contagemPresentes[presente]) {
+                        contagemPresentes[presente] = 1;
+                    } else {
+                        contagemPresentes[presente]++;
+                    }
+                });
+            });
+
+            // Verificar se algum presente atingiu o limite
+            document.querySelectorAll('.escolher').forEach(button => {
+                const presente = button.getAttribute('data-presente');
+                const quantidade = contagemPresentes[presente] || 0;
+                const limite = limitesPresentes[presente];
+
+                // Se a quantidade for igual ou superior ao limite, o presente fica indisponível
+                if (quantidade >= limite) {
+                    button.textContent = 'Indisponível';
+                    button.disabled = true;
+                    button.classList.add('indisponivel');  // Classe para estilo de indisponível
+                } else {
+                    button.textContent = 'Escolher';
+                    button.disabled = false;
+                    button.classList.remove('indisponivel');
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Erro ao verificar a planilha:', error);
+        });
+}
+
+// Executar a função imediatamente ao carregar a página
+verificarDisponibilidadePresentes();
+
+// Definir uma rotina para executar a função a cada 2 minutos (120000 ms)
+setInterval(verificarDisponibilidadePresentes, 120000);
