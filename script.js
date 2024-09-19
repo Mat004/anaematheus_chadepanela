@@ -138,7 +138,29 @@ const limitesPresentes = {
     "Extrator de escama": 1,
     "Faqueiro (Inox)": 1,
     "Ferro de passar roupa (Black & Deck)": 1,
-    "Formas de bolo": 2
+    "Formas de bolo": 2,
+    "Kit 3 formas para pizza": 1,
+    "Forma de gelo": 2,
+    "Frigideira anti aderente (Tamanho G)": 1,
+    "Frigideira anti aderente (Tamanho M)": 1,
+    "Frigideira anti aderente (Tamanho P)": 1,
+    "Fruteira": 1,
+    "Galheteiro": 1,
+    "Garrafa térmica": 1,
+    "Grela grill p/ fogão": 1,
+    "Jarra para suco com tampa": 2,
+    "Jogo americano (4 peças)": 1,
+    "Jogo de cama casal (4 peças)": 3,
+    "Jogo de taças p/ sobremesa (6 peças)": 1,
+    "Jogos de xícara e pires (6 peças)": 1,
+    "Kit potes de plástico": 2,
+    "Leiteira": 1,
+    "Lixeira para pia": 1,
+    "Luva térmica": 1,
+    "Mantegueira": 1,
+    "Mini processador elétrico": 1,
+    "MOP": 1,
+    "Multiprocessador - Philco": 1
 };
 
 
