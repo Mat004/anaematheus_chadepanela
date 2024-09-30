@@ -168,6 +168,7 @@ const limitesPresentes = {
     "MOP": 1,
     "Multiprocessador - Philco": 1,
     "Panelas antiaderentes": 1,
+    "Panelas de pressão elétrica - Philco":1,
     "Panos de prato": 10,
     "Par de toalha de banho": 3,
     "Par de toalha de rosto": 3,
