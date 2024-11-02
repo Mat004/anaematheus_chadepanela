@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chave Pix</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Dados para Pix 💵</h1>
+    <p><strong>Banco:</strong> Santander</p>
+    <p><strong>Nome:</strong> Matheus Souza Rodrigues</p>
+    <p><strong>Chave Pix:</strong> <span id="chavePix">85999067641</span></p>
+
+    <!-- Botão para copiar a chave Pix -->
+    <button onclick="copiarChavePix()" style="display: block; margin: 20px auto;">Copiar chave Pix</button>
+    
+    <h3>Agradecemos a sua generosidade!!!</h3>
+
+    <script>
+        function copiarChavePix() {
+            const chavePix = document.getElementById("chavePix").textContent;
+
+            navigator.clipboard.writeText(chavePix)
+                .then(() => {
+                    alert("Chave Pix copiada para a área de transferência!");
+                })
+                .catch(err => {
+                    console.error("Erro ao copiar a chave Pix: ", err);
+                });
+        }
+    </script>
+
+    </br>
+    </br>
+    </br>
+    <button onclick="window.history.back()" style="display: block; margin: 20px auto;">Voltar</button>
+    
+</body>
+</html>
+
