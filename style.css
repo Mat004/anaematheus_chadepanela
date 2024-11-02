@@ -7,7 +7,7 @@ body {
     color: #555;
 }
 
-h1, h2, p {
+h1, h2, h3, p {
     text-align: center;
 }
 
@@ -250,7 +250,22 @@ footer {
     display: none;
 }
 
+/*Botão do pix*/
+button.pix {
+    padding: 10px 20px; /* Ajuste o padding para diminuir o tamanho */
+    margin-top: 5px; /* Diminui o espaçamento em relação ao botão de cima */
+    background-color: #f06292; /* Cor rosada */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px; /* Reduz um pouco o tamanho da fonte */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
 
+button.pix:hover {
+    background-color: #ec407a; /* Cor de destaque ao passar o mouse */
+}
 
 
 
