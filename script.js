@@ -121,6 +121,7 @@ const limitesPresentes = {
     "Batedor de ovos + Concha p/ molho + Concha de sorvete": 1,
     "Bowls": 1,
     "Cesto de lixo p/ banheiro (Inox - 5L)": 2,
+    "Cesto de lixo p/ banheiro (Inox - 10L)": 1,
     "Cobertor": 4,
     "Conjunto de colheres de silicone (6 peças)": 1,
     "Concha para molho": 1,
